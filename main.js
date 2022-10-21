@@ -82,7 +82,8 @@ function render() {
         deleteBtn.classList.add("delete");
         myData.appendChild(deleteBtn);
         deleteBtn.textContent = "X";
-
+        deleteBtn.setAttribute("data-id",lists.id);
+        deleteBtn.addEventListener("click",deleteItem);
     }
     
 }
@@ -101,7 +102,7 @@ function update() {
             }
     }
 
-    console.log(totalIncome,totalExpense);
+    // console.log(totalIncome,totalExpense);
 
     myTotalBalance = totalIncome - totalExpense;
 
@@ -119,6 +120,7 @@ function update() {
 function listeners() {
     addIncome.addEventListener("click", addIncomeData);
     addExpense.addEventListener("click", addExpenseData);
+    
 }
 
 
@@ -144,7 +146,25 @@ function addTransactionHistory(thisName, thisAmount, type) {
     update();
 }
 
-
+function deleteItem(e){
+    let deleteIndex;
+    // let a= state.transactions.filter(item=>{
+    //     item.id !== e.target.getAttribute("data-id")
+    // });
+    // console.log(a);
+    // console.log(`id is ${e.target.data-id}`);
+    let id= parseInt(e.target.getAttribute("data-id"));
+   
+    for (let index = 0; index < state.transactions.length; index++) {
+        if( id ===  state.transactions[index].id){
+            deleteIndex= index;
+            break;
+        }
+    }
+    // console.log(deleteIndex);
+    state.transactions.splice(deleteIndex,1);
+    update();
+}
 
 
 // last: generating random id to target and delete that particular item
